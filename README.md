@@ -21,7 +21,15 @@ Confirm that the Python version printed by the first command is 3.10 or newer.
 ## Current coverage
 
 The UI suite covers the login-page smoke check, authentication, account
-management, and fund transfers. Transfer coverage verifies confirmation,
-source and destination balance changes, transaction history, and rejection of
-blank or nonnumeric amounts. On the public demo, invalid amounts currently
-show a generic error; tests also verify that balances remain unchanged.
+management, fund transfers, and bill payments. Transfer coverage verifies
+confirmation, source and destination balance changes, transaction history,
+and rejection of blank or nonnumeric amounts. On the public demo, invalid
+transfer amounts currently show a generic error; tests verify balances remain
+unchanged.
+
+Bill-pay coverage checks successful-payment confirmation, account balance,
+missing-field validation, and mismatched account confirmation. The current
+public demo confirms a bill payment but the source account balance and
+transaction history remain unchanged; the balance assertion is intentionally
+left failing and documented in
+[bill-pay test findings](./docs/bill-pay-test-findings.md).
