@@ -76,10 +76,10 @@ The README also notes default-port conflicts for HyperSQL and ActiveMQ.
 
 ## Account-dependent test statuses
 
-All cases below are marked **BLOCKED / NOT RUN** for this investigation-only
-request. This status does not mean the public demo is missing accounts. The
-account prerequisite was observed; implementation and workflow execution
-remain outside the approved investigation scope.
+At the time of this investigation-only request, all cases below were marked
+**BLOCKED / NOT RUN**. This did not mean the public demo was missing accounts.
+The account prerequisite was observed; implementation and workflow execution
+were outside the approved investigation scope at that time.
 
 | Case(s) | Status | Dependency or remaining prerequisite |
 |---|---|---|
@@ -91,3 +91,34 @@ remain outside the approved investigation scope.
 | BILL-01–BILL-04 | BLOCKED / NOT RUN | Existing source account; successful-payment and balance cases require sufficient funds. Future phase not started. |
 
 No test result is claimed for any blocked case.
+
+## Account-management execution
+
+After separate approval to implement and run account-management tests, the
+following account cases were executed against the public ParaBank demo on
+2026-11-27:
+
+| Case | Result |
+|---|---|
+| ACC-01 — Account overview shows account and balance | PASSED |
+| ACC-02 — Open checking account | PASSED |
+| ACC-03 — Open savings account | PASSED |
+| ACC-04 — Selected account details | PASSED |
+| ACC-05 — Account-opening funding transaction history | PASSED |
+
+The test suite waits for the account overview links and funding options to
+load. Transaction history waits for the page's outstanding jQuery requests to
+finish before checking the transaction rows, avoiding assertions against its
+initial, not-yet-loaded state.
+
+Verification:
+
+- `python -m pytest -v tests/test_accounts.py` — 5 passed in 25.71s.
+- `python -m pytest -v` — 14 passed in 55.79s (account, authentication, and
+  smoke tests).
+- Python syntax check and `git diff --check` passed.
+
+The account-opening tests create accounts and their associated funding
+transactions for synthetic customers on the shared public demo. No account
+for another user was modified, and no reset control was used. Transaction
+transfer and bill-payment cases remain unimplemented and unrun.
